@@ -6,6 +6,7 @@ import {Observable, of } from 'rxjs';
 import { map, retry, catchError } from 'rxjs/operators';
 import { User } from '../_models/metadata'
 import {Metadata } from '../_models/metadata'
+import { Instrument } from '../_models/instrument'
 import {latLng, LatLng, tileLayer,circle,polygon,icon} from 'leaflet';
 import * as L from 'leaflet';
 
@@ -14,6 +15,8 @@ import * as L from 'leaflet';
 import { AppConfig } from '../_services/config.service';
 //import { AuthenticationService } from '../_services/authentication.service';
 import { SpatialService } from '../_services/spatial.service'
+import { InstrumentService } from '../_services/instrument.service'
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -22,13 +25,20 @@ import { SpatialService } from '../_services/spatial.service'
 export class MapComponent implements OnInit {
 
   metadata: Metadata[];
+  instruments: Instrument[]
   selectedMetadata: Metadata;
   currentUser: User;
-  constructor(private http: HttpClient, private spatial: SpatialService) {
+  constructor(private http: HttpClient, private spatial: SpatialService,private instrumentService: InstrumentService) {
     //currentUser: localStorage.getItem('currentUser')
   }
 
   ngOnInit() {
+    //this.instrumentService.getInstruments().subscribe(instruments => this.instruments = instruments);
+    this.instrumentService.getInstruments().subscribe(data => {
+               console.log('data', data);
+               this.instruments = data;
+            })
+    console.log("getinstruments")
   }
 
   public onDrawCreated(e: any) {
@@ -39,7 +49,6 @@ export class MapComponent implements OnInit {
     console.log(e)
     console.log(String(e.layer.toGeoJSON()))
     var result = this.spatial.spatialSearch(e.layer.toGeoJSON().geometry).subscribe(metadata => this.metadata = metadata);
-
 	}
 
   options = {
@@ -70,31 +79,5 @@ export class MapComponent implements OnInit {
     }
  };
 
- spatialSearch(geometry: any){
-
-    var query = "{'$and':[{'name':'Landuse'},{'value.name':'dataset12042018'},{'value.loc': {$geoWithin: {'$geometry':"+JSON.stringify(geometry.geometry).replace(/"/g,'\'')+"}}}]}";
-    console.log(query)
-    let url = AppConfig.settings.aad.tenant+"/meta/v2/data?q="+encodeURI(query)+"&limit=100000&offset=0";
-       //.set("Authorization", "Bearer " + currentUser.access_token)
-    let head = new HttpHeaders()
-    .set("Content-Type", "application/x-www-form-urlencoded");
-    let options = {
-      headers: head
-    };
-console.log("stuff1")
-    this.http.get<any>(url, options).subscribe(responseData => console.log(responseData.result));
-    /*.pipe(
-     map((data) => {
-       console.log("more")
-       return data.result as Metadata[];
-     }),
-     catchError((e) => {
-       console.log()
-       return Observable.throw(new Error(e.message));
-     })
-   );*/
-   console.log("stuff2")
-   //return response;
-  }
 
 }
