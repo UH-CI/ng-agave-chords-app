@@ -16,7 +16,6 @@ export class IAppConfig {
 
     };
     apiServer: {
-        metadata: string;
-        rules: string;
+        agaveChords: string;
     };
 }
