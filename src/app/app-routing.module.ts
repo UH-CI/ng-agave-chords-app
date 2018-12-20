@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { SitesComponent } from './sites/sites.component';
 import { AuthGuard } from './_guards/auth.guard';
 
 const appRoutes: Routes = [
@@ -15,7 +16,11 @@ const appRoutes: Routes = [
         path: 'login',
         component: LoginComponent
     },
-
+    {
+        path: 'sites',
+        component: SitesComponent,
+        canActivate: [AuthGuard]
+    },
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];

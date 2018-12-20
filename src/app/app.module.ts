@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { MapComponent } from './map/map.component';
+import { SitesComponent } from './sites/sites.component';
 
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
@@ -27,7 +28,8 @@ export function initializeApp(appConfig: AppConfig) {
     AppComponent,
     LoginComponent,
     HomeComponent,
-    MapComponent
+    MapComponent,
+    SitesComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,7 @@ export function initializeApp(appConfig: AppConfig) {
          useFactory: initializeApp,
          deps: [AppConfig], multi: true },
       { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-      { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    //  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

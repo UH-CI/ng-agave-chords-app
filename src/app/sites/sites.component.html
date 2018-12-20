@@ -1,0 +1,8 @@
+<h2>My Sites</h2>
+<table>
+  <tr *ngFor="let site of sites">
+    <td>
+      <span class="badge">{{site.value.name}}</span> {{site.value | json}}
+    </td>
+  </tr>
+</table>
