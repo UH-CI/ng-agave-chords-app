@@ -1,0 +1,14 @@
+<h2>My Instruments</h2>
+<table>
+  <tr>
+    <td>
+      <ul class="instruments">
+        <li *ngFor="let instrument of instruments"
+         [class.selected]="instrument === selectedInstrument"
+         (click)="onSelect(instrument)" >
+          <span class="badge">{{instrument.value.name}}</span> {{instrument.value | json}}
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
