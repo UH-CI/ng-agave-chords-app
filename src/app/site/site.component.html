@@ -1,0 +1,35 @@
+<h2>Create Site</h2>
+<p>
+  Draw polygon or marker to define Site Location field.
+</p>
+<div leaflet style="height: 400px;width:800px"
+     leafletDraw
+     [leafletOptions]="options"
+     [leafletDrawOptions]="drawOptions"
+     (leafletDrawCreated)="onDrawCreated($event)">
+</div>
+
+<div class="example-container">
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults">
+    LOADING
+  </div>
+
+    <form [formGroup]="siteForm" (ngSubmit)="onFormSubmit(siteForm.value)">
+      <div class="button-row">
+        <span>Site Name </span>
+        <input  placeholder="Site Name" formControlName="site_name"/>
+      </div>
+      <div class="button-row">
+        <label>Site Description </label><br/>
+        <textarea class="textarea" rows="5" cols="100" placeholder="Site Description" formControlName="site_desc"></textarea>
+      </div>
+      <div class="button-row">
+        <span>Site Location </span>
+        <textarea  rows="5" cols="100" placeholder="Site Location" formControlName="site_loc"></textarea>
+      </div>
+      <div class="button-row">
+        <button class="button" type="submit"  color="primary">save</button>
+      </div>
+    </form>
+</div>

@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SitesComponent } from './sites/sites.component';
+import { SiteComponent } from './site/site.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -20,6 +21,11 @@ const appRoutes: Routes = [
     {
         path: 'sites',
         component: SitesComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'site',
+        component: SiteComponent,
         canActivate: [AuthGuard]
     },
     {
