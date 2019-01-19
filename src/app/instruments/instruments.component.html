@@ -6,7 +6,11 @@
         <li *ngFor="let instrument of instruments"
          [class.selected]="instrument === selectedInstrument"
          (click)="onSelect(instrument)" >
-          <span class="badge">{{instrument.value.name}}</span> {{instrument.value | json}}
+          <span class="badge">{{instrument.value.name}}
+          <pre *ngFor="let item of instrument.value | keyvalue">
+              {{item.key}}:{{item.value}}
+          </pre>
+          </span>
         </li>
       </ul>
     </td>
