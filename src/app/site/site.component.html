@@ -1,4 +1,7 @@
 <h2>Create Site</h2>
+<div *ngIf="site != undefined">
+{{site.name}}
+</div>
 <p>
   Draw polygon or marker to define Site Location field.
 </p>
@@ -18,15 +21,14 @@
     <form [formGroup]="siteForm" (ngSubmit)="onFormSubmit(siteForm.value)">
       <div class="button-row">
         <span>Site Name </span>
-        <input  placeholder="Site Name" formControlName="site_name"/>
+        <input  placeholder="Site Name" formControlName="name"/>
       </div>
       <div class="button-row">
-        <label>Site Description </label><br/>
-        <textarea class="textarea" rows="5" cols="100" placeholder="Site Description" formControlName="site_desc"></textarea>
+        <input  placeholder="Site Elevation" formControlName="elevation"/>
       </div>
       <div class="button-row">
         <span>Site Location </span>
-        <textarea  rows="5" cols="100" placeholder="Site Location" formControlName="site_loc"></textarea>
+        <textarea  rows="5" cols="100" placeholder="Site Location" formControlName="geojson"></textarea>
       </div>
       <div class="button-row">
         <button class="button" type="submit"  color="primary">save</button>

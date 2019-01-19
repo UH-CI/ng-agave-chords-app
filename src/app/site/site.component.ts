@@ -8,6 +8,7 @@ import { map, retry, catchError } from 'rxjs/operators';
 import {latLng, LatLng, tileLayer,circle,polygon,icon} from 'leaflet';
 import * as L from 'leaflet';
 import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { SiteService } from '../_services/site.service';
 
 @Component({
   selector: 'app-site',
@@ -16,20 +17,20 @@ import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Valida
 })
 export class SiteComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private siteService: SiteService, private formBuilder: FormBuilder) { }
 
+  site: Site;
   siteForm: FormGroup;
-  site_name:string='';
-  site_desc:string='';
-  site_loc:string='';
-  updated_at:Date=null;
+  name:string='';
+  elevation:number;
+  geojson:string='';
   isLoadingResults = false;
 
   ngOnInit() {
     this.siteForm = this.formBuilder.group({
-    'site_name' : [null, Validators.required],
-    'site_desc' : [null, Validators.required],
-    'site_loc' : [null, Validators.required],
+    'name' : [null, Validators.required],
+    'elevation': [0.0, Validators.required],
+    'geojson' : [null, Validators.required],
     'updated_at' : [null, Validators.required]
   });
   }
@@ -41,13 +42,15 @@ export class SiteComponent implements OnInit {
     console.log('Draw Created Event!');
     console.log(e)
     console.log(String(e.layer.toGeoJSON()))
-    this.siteForm.patchValue({'site_loc' : JSON.stringify(e.layer.toGeoJSON().geometry)})
+    this.siteForm.patchValue({'geojson' : JSON.stringify(e.layer.toGeoJSON().geometry)})
   //  var result = this.spatial.spatialSearch(e.layer.toGeoJSON().geometry).subscribe(metadata => this.metadata = metadata);
 	}
 
   public onFormSubmit(form:NgForm) {
     this.isLoadingResults = true;
-    console.log('submit_form'+form)
+    console.log('submit_form'+JSON.stringify(form))
+    this.siteService.createSite(form)
+        .subscribe(site => this.site = site);
     this.isLoadingResults = false;
     // this.api.addProduct(form)
     //   .subscribe(res => {

@@ -7,6 +7,7 @@ import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, retry, catchError } from 'rxjs/operators';
 import { AppConfig } from './config.service';
+import { NgForm } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,33 @@ export class SiteService {
       retry(3),
       map((data) => {
         return data.result as Site[];
+      }),
+      catchError((error: any) => {
+        console.log(error)
+        return throwError(error.statusText);
+      })
+    );
+    return response;
+    interface ResponseResults {
+      result: any
+    }
+  }
+
+  createSite(form:NgForm): Observable<Site> {
+    let head = new HttpHeaders()
+    .set("Content-Type", "application/x-www-form-urlencoded");
+  //  .set('Access-Control-Allow-Origin','*');
+    //var formData = form;
+    var url = this.siteUrl + '?name='+form.name+'&lat='+JSON.parse(form.geojson).coordinates[1]+'&lon='+JSON.parse(form.geojson).coordinates[0]+'&elevation='+form.elevation+'&geojson='+encodeURI(form.geojson)
+    let options = {
+      headers: head,
+    };
+
+    let response = this.http.post<ResponseResults>(url, options)
+    .pipe(
+      retry(3),
+      map((data) => {
+        return data.result as Site;
       }),
       catchError((error: any) => {
         console.log(error)
