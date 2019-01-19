@@ -46,10 +46,21 @@ export class SiteComponent implements OnInit {
   //  var result = this.spatial.spatialSearch(e.layer.toGeoJSON().geometry).subscribe(metadata => this.metadata = metadata);
 	}
 
+  public onDrawEdited(e: any) {
+
+		// tslint:disable-next-line:no-console
+
+    console.log('Draw Created Event!');
+    console.log(e)
+    console.log(String(e.layers.toGeoJSON()))
+    this.siteForm.patchValue({'geojson' : JSON.stringify(e.layer.toGeoJSON().geometry)})
+  //  var result = this.spatial.spatialSearch(e.layer.toGeoJSON().geometry).subscribe(metadata => this.metadata = metadata);
+	}
+
   public onFormSubmit(form:NgForm) {
     this.isLoadingResults = true;
     console.log('submit_form'+JSON.stringify(form))
-    this.siteService.createSite(form)
+    this.siteService.createSite(JSON.parse(JSON.stringify(form)))
         .subscribe(site => this.site = site);
     this.isLoadingResults = false;
     // this.api.addProduct(form)
@@ -78,7 +89,7 @@ export class SiteComponent implements OnInit {
       circle: false,
       polyline: false,
       circlemarker: false,
-      polygon: {
+      polygon: false,/*{
           metric: false,
           showArea: true,
           drawError: {
@@ -88,7 +99,8 @@ export class SiteComponent implements OnInit {
           shapeOptions: {
             color: 'blue'
           }
-        },
+        },*/
+      rectangle: false,
        marker: {
           icon: L.icon({
               iconSize: [ 25, 41 ],

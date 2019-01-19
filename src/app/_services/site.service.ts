@@ -47,12 +47,13 @@ export class SiteService {
     }
   }
 
-  createSite(form:NgForm): Observable<Site> {
+  createSite(form:JSON): Observable<Site> {
     let head = new HttpHeaders()
     .set("Content-Type", "application/x-www-form-urlencoded");
   //  .set('Access-Control-Allow-Origin','*');
     //var formData = form;
-    var url = this.siteUrl + '?name='+form.name+'&lat='+JSON.parse(form.geojson).coordinates[1]+'&lon='+JSON.parse(form.geojson).coordinates[0]+'&elevation='+form.elevation+'&geojson='+encodeURI(form.geojson)
+    console.log(form)
+    var url = this.siteUrl + '?name='+form['name']+'&lat='+JSON.parse(form['geojson']).coordinates[1]+'&lon='+JSON.parse(form['geojson']).coordinates[0]+'&elevation='+form['elevation']+'&geojson='+encodeURI(form['geojson'])
     let options = {
       headers: head,
     };
