@@ -1,0 +1,23 @@
+<h2>
+  Create Instrument
+</h2>
+<div class="example-container">
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults">
+    LOADING
+  </div>
+
+    <form [formGroup]="instrumentForm" (ngSubmit)="onFormSubmit(instrumentForm.value)">
+
+      <div class="button-row">
+        <span>Instrument Name </span>
+        <input  placeholder="instrument Name" formControlName="name"/>
+      </div>
+      <div>
+        
+      </div>
+      <div class="button-row">
+        <button class="button" type="submit"  color="primary">save</button>
+      </div>
+    </form>
+</div>

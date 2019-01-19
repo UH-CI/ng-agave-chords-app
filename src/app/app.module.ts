@@ -20,6 +20,7 @@ import { AppConfig } from './_services/config.service';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 import { SiteComponent } from './site/site.component';
+import { InstrumentComponent } from './instrument/instrument.component';
 
 export function initializeApp(appConfig: AppConfig) {
   return () => appConfig.load();
@@ -34,7 +35,8 @@ export function initializeApp(appConfig: AppConfig) {
     MapComponent,
     SitesComponent,
     InstrumentsComponent,
-    SiteComponent
+    SiteComponent,
+    InstrumentComponent
   ],
   imports: [
     BrowserModule,

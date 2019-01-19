@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { SitesComponent } from './sites/sites.component';
 import { SiteComponent } from './site/site.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
+import { InstrumentComponent } from './instrument/instrument.component';
 import { AuthGuard } from './_guards/auth.guard';
 
 const appRoutes: Routes = [
@@ -31,6 +32,11 @@ const appRoutes: Routes = [
     {
         path: 'instruments',
         component: InstrumentsComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'instrument',
+        component: InstrumentComponent,
         canActivate: [AuthGuard]
     },
     // otherwise redirect to home
