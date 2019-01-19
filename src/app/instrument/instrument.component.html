@@ -12,9 +12,13 @@
       <div class="button-row">
         <span>Instrument Name </span>
         <input  placeholder="instrument Name" formControlName="name"/>
-      </div>
+      </div><br/>
       <div>
-        
+        <span>Select Site</span>
+        <select class="form-control" formControlName="site_uuid" required *ngIf='sites'>
+          <option *ngFor="let site of sites" [value]="site.uuid">{{site.value.name}}</option>
+        </select>
+        <span *ngIf="!sites"><br/>Loading Sites...</span>
       </div>
       <div class="button-row">
         <button class="button" type="submit"  color="primary">save</button>

@@ -69,4 +69,32 @@ export class InstrumentService {
       result: any
     }
   }
+
+  createInstrument(form:JSON): Observable<Instrument> {
+    let head = new HttpHeaders()
+    .set("Content-Type", "application/x-www-form-urlencoded");
+  //  .set('Access-Control-Allow-Origin','*');
+    //var formData = form;
+    console.log(form)
+    var url = this.instrumentUrl + '?name='+form['name']+'&site_uuid='+form['site_uuid']
+    let options = {
+      headers: head,
+    };
+
+    let response = this.http.post<ResponseResults>(url, options)
+    .pipe(
+      retry(3),
+      map((data) => {
+        return data.result as Instrument;
+      }),
+      catchError((error: any) => {
+        console.log(error)
+        return throwError(error.statusText);
+      })
+    );
+    return response;
+    interface ResponseResults {
+      result: any
+    }
+  }
 }
