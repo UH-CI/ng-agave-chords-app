@@ -7,6 +7,7 @@ import { SitesComponent } from './sites/sites.component';
 import { SiteComponent } from './site/site.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
 import { InstrumentComponent } from './instrument/instrument.component';
+import { VariableComponent } from './variable/variable.component';
 import { AuthGuard } from './_guards/auth.guard';
 
 const appRoutes: Routes = [
@@ -37,6 +38,11 @@ const appRoutes: Routes = [
     {
         path: 'instrument',
         component: InstrumentComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'variable',
+        component: VariableComponent,
         canActivate: [AuthGuard]
     },
     // otherwise redirect to home
