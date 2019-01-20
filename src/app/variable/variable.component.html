@@ -1,10 +1,11 @@
-<p>
-  Create Variable works!
-</p>
+<h2>
+  Create Variable
+</h2>
 
 <div>
     <label>Choose Site: </label>
     <select class="form-control" (change)="getInstruments($event.target.value)">
+        <option value=''></option>
         <option *ngFor="let site of sites" value={{site.uuid}}>
             {{site.value.name}}
         </option>
@@ -14,6 +15,7 @@
   <div>
       <label>Choose Instrument: </label>
       <select class="form-control" formControlName="instrument_uuid">
+          <option value=''></option>
           <option *ngFor="let instrument of instruments" value={{instrument.uuid}}>
               {{instrument.value.name}}
           </option>
