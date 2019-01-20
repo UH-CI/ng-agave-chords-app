@@ -1,0 +1,32 @@
+<h2>
+  Variables
+</h2>
+<div>
+    <label>Choose Site: </label>
+    <select class="form-control" (change)="getInstruments($event.target.value)">
+      <option value=''></option>
+        <option *ngFor="let site of sites" value={{site.uuid}}>
+            {{site.value.name}}
+        </option>
+    </select>
+</div>
+<div>
+  <label>Choose Instrument: </label>
+  <select class="form-control" (change)="getVariables($event.target.value)">
+      <option value=''></option>
+      <option *ngFor="let instrument of instruments" value={{instrument.uuid}}>
+          {{instrument.value.name}}
+      </option>
+  </select>
+</div>
+Variables:
+<table>
+  <tr *ngFor="let variable of variables">
+    <td>
+      <span class="badge">{{variable.value.name}}</span>
+    </td>
+    <td>
+      {{variable.value | json}}
+    </td>  
+  </tr>
+</table>

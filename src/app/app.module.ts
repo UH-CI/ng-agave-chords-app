@@ -22,6 +22,7 @@ import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 import { SiteComponent } from './site/site.component';
 import { InstrumentComponent } from './instrument/instrument.component';
 import { VariableComponent } from './variable/variable.component';
+import { VariablesComponent } from './variables/variables.component';
 
 export function initializeApp(appConfig: AppConfig) {
   return () => appConfig.load();
@@ -38,7 +39,8 @@ export function initializeApp(appConfig: AppConfig) {
     InstrumentsComponent,
     SiteComponent,
     InstrumentComponent,
-    VariableComponent
+    VariableComponent,
+    VariablesComponent
   ],
   imports: [
     BrowserModule,

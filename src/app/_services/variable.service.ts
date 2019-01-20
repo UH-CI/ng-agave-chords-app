@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Variable } from '../_models/variable';
+import { Instrument } from '../_models/instrument';
 //import { Variables } from './Variables';
 import { Observable, of } from 'rxjs';
 import { throwError } from 'rxjs';
@@ -13,24 +14,20 @@ import { NgForm } from '@angular/forms';
   providedIn: 'root'
 })
 export class VariableService {
-  private VariableUrl = AppConfig.settings.apiServer.agaveChords +'/Variables';  // URL to web api
+  private variableUrl = AppConfig.settings.apiServer.agaveChords +'/variables';  // URL to web api
 
   constructor(private http: HttpClient,
     private messageService: MessageService)  {
   }
 
-  getVariables(): Observable<Variable[]> {
+  getVariables(instrument: Instrument): Observable<Variable[]> {
     //fetch Variables from Agave Chords API
-    //return this.http.get<Variable[]>(this.VariableUrl)
-
-    let head = new HttpHeaders()
-    .set("Content-Type", "application/x-www-form-urlencoded");
-  //  .set('Access-Control-Allow-Origin','*');
+    let head = new HttpHeaders().set("Content-Type", "application/x-www-form-urlencoded");
     let options = {
       headers: head
     };
 
-    let response = this.http.get<ResponseResults>(this.VariableUrl, options)
+    let response = this.http.get<ResponseResults>(this.variableUrl+'?instrument_uuid='+instrument.uuid, options)
     .pipe(
       retry(3),
       map((data) => {
@@ -53,7 +50,7 @@ export class VariableService {
   //  .set('Access-Control-Allow-Origin','*');
     //var formData = form;
     console.log(form)
-    var url = this.VariableUrl + '?name='+form['name']+'&instrument_uuid='+form['instrument_uuid']+'&shortname='+form['shortname']+'&units='+form['units']+'&units_abbrv='+form['units_abbrv']
+    var url = this.variableUrl + '?name='+form['name']+'&instrument_uuid='+form['instrument_uuid']+'&shortname='+form['shortname']+'&units='+form['units']+'&units_abbrv='+form['units_abbrv']
     let options = {
       headers: head,
     };
