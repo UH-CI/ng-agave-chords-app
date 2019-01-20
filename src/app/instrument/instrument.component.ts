@@ -20,15 +20,31 @@ import { SiteService } from '../_services/site.service';
 export class InstrumentComponent implements OnInit {
 
   sites: Site[];
+  instrument: Instrument;
+  instrumentForm: FormGroup;
+  name:string='';
+  site_uuid:string='';
 
-  constructor(private siteService: SiteService, private instrumentService: InstrumentService) { }
+  constructor(private siteService: SiteService, private instrumentService: InstrumentService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getSites();
+    this.instrumentForm = this.formBuilder.group({
+    'site_uuid' : [null, Validators.required],
+    'name': [null, Validators.required],
+  });
   }
 
   getSites(): void {
     this.siteService.getSites()
         .subscribe(sites => this.sites = sites);
+  }
+
+  public onFormSubmit(form:NgForm) {
+
+    console.log('submit_form'+JSON.stringify(form))
+    this.instrumentService.createInstrument(JSON.parse(JSON.stringify(form)))
+        .subscribe(instrument => this.instrument = instrument);
+
   }
 }
