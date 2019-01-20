@@ -15,6 +15,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER } from '@angular/core';
+import { NgHttpLoaderModule } from 'ng-http-loader';
 import { AppConfig } from './_services/config.service';
 
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -48,7 +49,8 @@ export function initializeApp(appConfig: AppConfig) {
     HttpClientModule,
     AppRoutingModule,
     LeafletModule.forRoot(),
-    LeafletDrawModule.forRoot()
+    LeafletDrawModule.forRoot(),
+    NgHttpLoaderModule.forRoot()
   ],
   providers: [
       AppConfig,
