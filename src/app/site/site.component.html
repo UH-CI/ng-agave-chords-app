@@ -9,7 +9,9 @@
      leafletDraw
      [leafletOptions]="options"
      [leafletDrawOptions]="drawOptions"
-     (leafletDrawCreated)="onDrawCreated($event)">
+     (leafletDrawCreated)="onDrawCreated($event)"
+     (leafletDrawEdited)="onDrawEdited($event)"
+     >
 </div>
 
 <div class="example-container">

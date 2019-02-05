@@ -1,7 +1,7 @@
 <h2>
   Variables
 </h2>
-<div>
+<div *ngIf="sites; else loadingSites">
     <label>Choose Site: </label>
     <select class="form-control" (change)="getInstruments($event.target.value)">
       <option value=''></option>
@@ -10,7 +10,7 @@
         </option>
     </select>
 </div>
-<div>
+<div *ngIf="instruments">
   <label>Choose Instrument: </label>
   <select class="form-control" (change)="getVariables($event.target.value)">
       <option value=''></option>
@@ -19,14 +19,23 @@
       </option>
   </select>
 </div>
-Variables:
-<table>
-  <tr *ngFor="let variable of variables">
-    <td>
-      <span class="badge">{{variable.value.name}}</span>
-    </td>
-    <td>
-      {{variable.value | json}}
-    </td>  
-  </tr>
-</table>
+<div *ngIf="variables">
+  Variables:
+  <table>
+    <tr *ngFor="let variable of variables">
+      <td>
+        <span class="badge">{{variable.value.name}}</span>
+      </td>
+      <td>
+        {{variable.value | json}}
+      </td>
+    </tr>
+  </table>
+</div>
+
+<ng-template #loadingSites>
+  Loading Sites - please wait....
+</ng-template>
+<div *ngIf="loading">
+  Loading  - please wait....
+</div>

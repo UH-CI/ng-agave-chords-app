@@ -16,6 +16,7 @@ export class VariablesComponent implements OnInit {
   sites: Site[];
   instruments: Instrument[];
   variables: Variable[];
+  loading: false;
 
   constructor(private siteService: SiteService, private instrumentService: InstrumentService, private variableService: VariableService) { }
 
