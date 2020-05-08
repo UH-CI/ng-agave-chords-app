@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Site } from '../_models/site';
+import { Project } from '../_models/project';
 //import { Sites } from './sites';
 import { Observable, of } from 'rxjs';
 import { throwError } from 'rxjs';
@@ -12,29 +13,56 @@ import { NgForm } from '@angular/forms';
 @Injectable({
   providedIn: 'root'
 })
-export class SiteService {
-  private siteUrl = AppConfig.settings.apiServer.agaveChords //+'/sites';  // URL to web api
+export class ProjectService {
+  private projectUrl = AppConfig.settings.apiServer.agaveChords +'/projects';  // URL to web api
 
   constructor(private http: HttpClient,
     private messageService: MessageService)  {
   }
 
-  getSites(): Observable<Site[]> {
+  getProjects(): Observable<Project[]> {
     //fetch Sites from Agave Chords API
     //return this.http.get<Site[]>(this.siteUrl)
 
     let head = new HttpHeaders()
-    .set("Content-Type", "application/x-www-form-urlencoded");
+    .set("Content-Type", "application/json");
   //  .set('Access-Control-Allow-Origin','*');
     let options = {
       headers: head
     };
 
-    let response = this.http.get<ResponseResults>(this.siteUrl, options)
+    let response = this.http.get<ResponseResults>(this.projectUrl, options)
     .pipe(
       retry(3),
       map((data) => {
-        return data.result as Site[];
+        return data.result as Project[];
+      }),
+      catchError((error: any) => {
+        console.log(error)
+        return throwError(error.statusText);
+      })
+    );
+    return response;
+    interface ResponseResults {
+      result: any
+    }
+  }
+  getProject(project): Observable<Project> {
+    //fetch Sites from Agave Chords API
+    //return this.http.get<Site[]>(this.siteUrl)
+
+    let head = new HttpHeaders()
+    .set("Content-Type", "application/json");
+  //  .set('Access-Control-Allow-Origin','*');
+    let options = {
+      headers: head
+    };
+
+    let response = this.http.get<ResponseResults>(this.projectUrl, options)
+    .pipe(
+      retry(3),
+      map((data) => {
+        return data.result as Project;
       }),
       catchError((error: any) => {
         console.log(error)
@@ -47,26 +75,24 @@ export class SiteService {
     }
   }
 
-  createSite(form:JSON): Observable<Site> {
+  createProject(form:JSON): Observable<Project> {
     let head = new HttpHeaders()
     .set("Content-Type", "application/json");
   //  .set('Access-Control-Allow-Origin','*');
     //var formData = form;
     console.log(form)
-    var url = this.siteUrl + '/projects/'+ form['project_id'] + '/sites'
+    var url = this.projectUrl
     let options = form
-    options['site_id'] = form['site_name']
-    delete options['geojson']
-    delete options['project_id']
     // {
     //   headers: head,
+    //   body: form
     // };
 
     let response = this.http.post<ResponseResults>(url, options)
     .pipe(
       retry(3),
       map((data) => {
-        return data.result as Site;
+        return data.result as Project;
       }),
       catchError((error: any) => {
         console.log(error)

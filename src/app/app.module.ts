@@ -8,7 +8,8 @@ import { HomeComponent } from './home/home.component';
 import { MapComponent } from './map/map.component';
 import { SitesComponent } from './sites/sites.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
-
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectComponent } from './project/project.component';
 
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
@@ -41,7 +42,9 @@ export function initializeApp(appConfig: AppConfig) {
     SiteComponent,
     InstrumentComponent,
     VariableComponent,
-    VariablesComponent
+    VariablesComponent,
+    ProjectComponent,
+    ProjectsComponent
   ],
   imports: [
     BrowserModule,

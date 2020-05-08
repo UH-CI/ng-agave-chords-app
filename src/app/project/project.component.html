@@ -1,0 +1,41 @@
+<h2>Create Project</h2>
+<div *ngIf="project != undefined">
+{{project.project_name}}
+</div>
+
+<div class="example-container">
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults">
+    LOADING
+  </div>
+
+    <form [formGroup]="projectForm" (ngSubmit)="onFormSubmit(projectForm.value)">
+      <div class="button-row">
+        <span>Project Name </span>
+        <input  placeholder="Project Name" formControlName="project_name"/>
+      </div>
+      <div class="button-row">
+        <span>Project owner </span>
+        <input  placeholder="Project Owner" formControlName="owner"/>
+      </div>
+      <div class="button-row">
+        <span>Project PI </span>
+        <input  placeholder="Project PI" formControlName="pi"/>
+      </div>
+      <div class="button-row">
+        <span>Project description </span>
+        <input  placeholder="Project Description" formControlName="description"/>
+      </div>
+      <div class="button-row">
+        <span>Project URL </span>
+        <input  placeholder="Project URL" formControlName="project_url"/>
+      </div>
+      <div class="button-row">
+        <span>Project Funding Source </span>
+        <input  placeholder="Project Funding Source" formControlName="funding_resource"/>
+      </div>
+      <div class="button-row">
+        <button class="button" type="submit"  color="primary">save</button>
+      </div>
+    </form>
+</div>

@@ -1,0 +1,8 @@
+<h2>My Projects</h2>
+<table>
+  <tr *ngFor="let project of projects">
+    <td>
+      <span class="badge">{{project.project_name}}</span> {{projects | json}}
+    </td>
+  </tr>
+</table>

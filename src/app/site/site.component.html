@@ -19,14 +19,30 @@
        *ngIf="isLoadingResults">
     LOADING
   </div>
+      <form [formGroup]="siteForm" (ngSubmit)="onFormSubmit(siteForm.value)">
+    <div>
+      <span>Select Project</span>
+      <select class="form-control" formControlName="project_id" required *ngIf='projects'>
+        <option *ngFor="let project of projects" [value]="project.project_id">{{project.project_name}}</option>
+      </select>
+      <span *ngIf="!sites"><br/>Loading Projects...</span>
+    </div>
 
-    <form [formGroup]="siteForm" (ngSubmit)="onFormSubmit(siteForm.value)">
       <div class="button-row">
         <span>Site Name </span>
-        <input  placeholder="Site Name" formControlName="name"/>
+        <input  placeholder="Site Name" formControlName="site_name"/>
       </div>
       <div class="button-row">
+        <span>Elevation</span>
         <input  placeholder="Site Elevation" formControlName="elevation"/>
+      </div>
+      <div class="button-row">
+        <span>Longitude</span>
+        <input  placeholder="Site Longitude" formControlName="longitude"/>
+      </div>
+      <div class="button-row">
+        <span>Latitude</span>
+        <input  placeholder="Site Latitude" formControlName="latitude"/>
       </div>
       <div class="button-row">
         <span>Site Location </span>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Site } from '../_models/site';
+import { Project } from '../_models/project';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
@@ -9,6 +10,7 @@ import {latLng, LatLng, tileLayer,circle,polygon,icon} from 'leaflet';
 import * as L from 'leaflet';
 import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { SiteService } from '../_services/site.service';
+import { ProjectService } from '../_services/project.service';
 
 @Component({
   selector: 'app-site',
@@ -17,8 +19,9 @@ import { SiteService } from '../_services/site.service';
 })
 export class SiteComponent implements OnInit {
 
-  constructor(private siteService: SiteService, private formBuilder: FormBuilder) { }
+  constructor(private projectService: ProjectService, private siteService: SiteService, private formBuilder: FormBuilder) { }
 
+  projects: Project[];
   site: Site;
   siteForm: FormGroup;
   name:string='';
@@ -27,13 +30,22 @@ export class SiteComponent implements OnInit {
   isLoadingResults = false;
 
   ngOnInit() {
+    this.getProjects()
     this.siteForm = this.formBuilder.group({
-    'name' : [null, Validators.required],
+    'project_id': [null, Validators.required],
+    'site_name' : [null, Validators.required],
     'elevation': [0.0, Validators.required],
-    'geojson' : [null, Validators.required],
-    'updated_at' : [null, Validators.required]
+    'latitude':[0.0, Validators.required],
+    'longitude':[0.0, Validators.required],
+    'geojson' : [null, Validators.required]
   });
   }
+
+  getProjects(): void {
+    this.projectService.getProjects()
+        .subscribe(projects => this.projects = projects);
+  }
+
 
   public onDrawCreated(e: any) {
 
@@ -54,6 +66,8 @@ export class SiteComponent implements OnInit {
     console.log(e)
     console.log(String(e.layers.toGeoJSON()))
     this.siteForm.patchValue({'geojson' : JSON.stringify(e.layer.toGeoJSON().geometry)})
+    this.siteForm.patchValue({'longitude' : JSON.stringify(e.layer.toGeoJSON().geometry)})
+    this.siteForm.patchValue({'latitude' : JSON.stringify(e.layer.toGeoJSON().geometry)})
   //  var result = this.spatial.spatialSearch(e.layer.toGeoJSON().geometry).subscribe(metadata => this.metadata = metadata);
 	}
 

@@ -27,10 +27,10 @@ export class VariablesComponent implements OnInit {
     this.siteService.getSites()
         .subscribe(sites => this.sites = sites);
   }
-  getInstruments(site_uuid: string): void {
-    console.log(site_uuid)
+  getInstruments(site_id: string): void {
+    console.log(site_id)
     var site_query = new Site()
-    site_query.uuid = site_uuid;
+    site_query.site_id = site_id;
     this.instrumentService.getInstrumentsBySite(site_query)
         .subscribe(instruments => this.instruments = instruments);
   }

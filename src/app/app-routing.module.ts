@@ -5,6 +5,8 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SitesComponent } from './sites/sites.component';
 import { SiteComponent } from './site/site.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectComponent } from './project/project.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
 import { InstrumentComponent } from './instrument/instrument.component';
 import { VariableComponent } from './variable/variable.component';
@@ -49,6 +51,16 @@ const appRoutes: Routes = [
     {
         path: 'variables',
         component: VariablesComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'project',
+        component: ProjectComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'projects',
+        component: ProjectsComponent,
         canActivate: [AuthGuard]
     },
     // otherwise redirect to home
