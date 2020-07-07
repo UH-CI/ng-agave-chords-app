@@ -12,7 +12,8 @@
     "aad": {
     "requireAuth": true,
     "tenant": "#{aadTenant}",
-    "clientId": "#{aadClientId}"
+    "clientId": "#{aadClientId}",
+    "loginUrl":""
     },
     "apiServer": {
     "metadata": "https://#{apiServerPrefix}.demo.com/api/v1.0/",
